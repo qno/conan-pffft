@@ -1,2 +1,5 @@
 # conan-pffft
-A conan recipe for PFFFT (a pretty fast FFT).
+A [conan](https://conan.io/) recipe for [PFFFT](https://bitbucket.org/jpommier/pffft).
+***
+
+***
