@@ -5,7 +5,18 @@
 
 int main() {
 
-   std::cout << "includes work?" << std::endl;
+   auto* s = pffft_new_setup(64, PFFFT_COMPLEX);
+   int Nbytes = 128  * sizeof(float);
+   auto* r = pffft_aligned_malloc(Nbytes);
+
+   if (s && r)
+   {
+      std::cout << "pffft test is working" << std::endl;
+   }
+   else
+   {
+      std::cout << "pffft test has failed" << std::endl;
+   }
 
    return 0;
 }
