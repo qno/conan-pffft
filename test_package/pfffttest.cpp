@@ -12,6 +12,8 @@ int main() {
    if (s && r)
    {
       std::cout << "pffft test is working" << std::endl;
+      pffft_destroy_setup(s);
+      pffft_aligned_free(r);
    }
    else
    {
