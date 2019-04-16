@@ -70,7 +70,7 @@ add_library(${{LIBPFFFT}} ${{SOURCES}})
 # nvidia xxx
 # windows cl /Ox -D_USE_MATH_DEFINES /arch:SSE test_pffft.c pffft.c fftpack.c
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+if ("${{CMAKE_CXX_COMPILER_ID}}" STREQUAL "GNU")
    target_compile_options (${{LIBPFFFT}} PRIVATE -msse -mfpmath=sse)
 endif ()
 
