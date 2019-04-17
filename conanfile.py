@@ -58,20 +58,8 @@ set(LIBPFFFT "{}")
 set(SOURCES pffft/pffft.c pffft/fftpack.c)
 add_library(${{LIBPFFFT}} ${{SOURCES}})
 
-
-# macos gcc-4.2 -o test_pffft -arch x86_64 -O3 -Wall -W pffft.c test_pffft.c fftpack.c -L/usr/local/lib -I/usr/local/include/ -DHAVE_VECLIB -framework veclib -DHAVE_FFTW -lfftw3f
-#       gcc -o test_pffft -DHAVE_FFTW -DHAVE_VECLIB -O3 -Wall -W pffft.c test_pffft.c fftpack.c -L/usr/local/lib -I/usr/local/include/ -lfftw3f -framework veclib
-# linux gcc -o test_pffft -DHAVE_FFTW -msse2 -O3 -Wall -W pffft.c test_pffft.c fftpack.c -L$HOME/local/lib -I$HOME/local/include/ -lfftw3f -lm
-#       gcc -o test_pffft -DHAVE_FFTW -msse -mfpmath=sse -O3 -Wall -W pffft.c test_pffft.c fftpack.c -L/usr/local/lib -I/usr/local/include/ -lfftw3f -lm
-#       gcc -o test_pffft -DHAVE_FFTW -msse -mfpmath=sse -O3 -Wall -W pffft.c test_pffft.c fftpack.c -L/usr/local/lib -I/usr/local/include/ -lfftw3f -lm
-# linux arm gcc-4.7 -O3 -DHAVE_FFTW -march=armv7-a -mtune=cortex-a9 -mfloat-abi=hard -mfpu=neon -ffast-math test_pffft.c pffft.c -o test_pffft_arm fftpack.c -lm -I/usr/local/include/ -L/usr/local/lib/ -lfftw3f
-#           clang -O3 -DHAVE_FFTW -march=armv7-a -mtune=cortex-a9 -mfloat-abi=hard -mfpu=neon -ffast-math test_pffft.c pffft.c -o test_pffft_arm fftpack.c -lm -I/usr/local/include/ -L/usr/local/lib/ -lfftw3f
-# ipad   xxx
-# nvidia xxx
-# windows cl /Ox -D_USE_MATH_DEFINES /arch:SSE test_pffft.c pffft.c fftpack.c
-
-if ("${{CMAKE_CXX_COMPILER_ID}}" STREQUAL "GNU")
-   target_compile_options (${{LIBPFFFT}} PRIVATE -msse -mfpmath=sse)
+if ("${{CMAKE_CXX_COMPILER_ID}}" MATCHES "^(GNU|Clang|AppleClang)$")
+   target_compile_options (${{LIBPFFFT}} PRIVATE -msse4 -mfpmath=sse)
 endif ()
 
 if (MSVC)
