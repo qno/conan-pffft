@@ -151,7 +151,7 @@ jobs:
           CONAN_APPLE_CLANG_VERSIONS: 10.0
           XCODE_VERSION: 10.1
         Apple Clang 10.2:
-          CONAN_APPLE_CLANG_VERSIONS: 10.0.1
+          CONAN_APPLE_CLANG_VERSIONS: 10.0
           XCODE_VERSION: 10.2
     steps:
       - task: UsePythonVersion@0
