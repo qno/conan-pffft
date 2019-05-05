@@ -1,4 +1,5 @@
 from conans import ConanFile, CMake, tools
+from conans.errors import ConanInvalidConfiguration
 import os
 
 class PffftConan(ConanFile):
@@ -7,13 +8,21 @@ class PffftConan(ConanFile):
     license = "BSD"
     author = "Julien Pommier"
     url = "https://github.com/qno/conan-pffft"
+    homepage = "https://bitbucket.org/jpommier/pffft"
     description = "PFFFT : a Pretty Fast FFT."
 
     settings = "os", "compiler", "build_type", "arch"
-    generators = "cmake"
 
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    options = {
+        "shared": [True, False],
+        "fPIC": [True, False]
+        }
+    default_options = {
+        "shared": False,
+         "fPIC": True
+         }
+
+    generators = "cmake"
 
     _pkg_name = "pffft"
     _libname = "pffft"
@@ -24,6 +33,12 @@ class PffftConan(ConanFile):
         tools.get(url, sha256="bb10afba127904a0c6c553fa445082729b7d72373511bda1b12a5be0e03f318a")
         os.rename("jpommier-pffft-29e4f76ac53b",self._pkg_name)
         self._createCMakeLists()
+
+    def configure(self):
+        del self.settings.compiler.libcxx
+        del self.options.fPIC
+        if self.options.shared:
+            raise ConanInvalidConfiguration("This library doesn't support shared lib compilation")
 
     def build(self):
         cmake = CMake(self)
@@ -40,7 +55,6 @@ class PffftConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = [self._libname]
-
 
     def _isVisualStudioBuild(self):
         return self.settings.os == "Windows" and self.settings.compiler == "Visual Studio"
