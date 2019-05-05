@@ -4,7 +4,7 @@ import os
 
 class PffftConan(ConanFile):
     name = "Pffft"
-    version = "default"
+    version = "latest"
     license = "BSD"
     author = "Julien Pommier"
     url = "https://github.com/qno/conan-pffft"
